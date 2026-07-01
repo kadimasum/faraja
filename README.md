@@ -12,22 +12,37 @@ Faraja is a fullstack application for tracking implementation of government proj
 
 - `frontend/`: Next.js dashboard for creating and viewing projects
 - `backend/`: FastAPI API with project and milestone endpoints
-- `docker-compose.yml`: PostgreSQL database service
 
-## 1. Start PostgreSQL
+## 1. Start PostgreSQL (Local Installation)
 
-From project root:
+Install and start PostgreSQL locally (Ubuntu/Debian):
+
+```bash
+sudo apt update
+sudo apt install -y postgresql postgresql-contrib
+sudo systemctl enable --now postgresql
+```
+
+Create the application database and set the password for `postgres` role:
+
+```bash
+sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'postgres';"
+sudo -u postgres psql -c "CREATE DATABASE faraja OWNER postgres;"
+```
+
+If the database already exists, ignore the create database error.
+
+From project root, copy base environment file:
 
 ```bash
 cp .env.example .env
-docker compose up -d db
 ```
 
 ## 2. Run Backend (FastAPI)
 
 ```bash
 cd backend
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
@@ -42,12 +57,12 @@ In a new terminal:
 cd frontend
 npm install
 cp .env.local.example .env.local
-npm run dev
+npm run dev -- -p 3001
 ```
 
 App URLs:
 
-- Frontend: http://localhost:3000
+- Frontend: http://localhost:3001
 - Backend API: http://localhost:8000
 - API docs: http://localhost:8000/docs
 
