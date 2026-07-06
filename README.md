@@ -17,7 +17,7 @@ The project currently has the following features:
 - Orchestration: Kubernetes
 - Monitoring: Prometheus & Grafana
 
-## Architecture*
+## Architecture
 The project is a 3-tier application consisting of:
 - The frontend (TypeScript Next.js)
 - The backend (Python FastAPI)
@@ -29,7 +29,7 @@ The project is organized in such a way that:
 * The frontend and the user's browser can communicate with each other via port 3001
 * The backend and the user's browser can communicate with each other via port 8000
 * Both the frontend and the backend containers are in a network called `frontend-network`
-* * Both the database and the backend containers are in a network called `backend-network`
+* Both the database and the backend containers are in a network called `backend-network`
 * The frontend and the database containers will not be able to access each other
 * The database container is mapped to a volume on the host machine in order to ensure data persistence
 
