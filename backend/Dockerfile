@@ -7,11 +7,14 @@ FROM python:3.12.13-slim
 # set working directory
 WORKDIR /backend
 
-# copies project files
-COPY . .
+# copies requirements.txt
+COPY requirements.txt ./
 
 # runs setup commands
 RUN pip install -r requirements.txt
+
+# copies project files
+COPY . .
 
 # exposes port 8000
 EXPOSE 8000
