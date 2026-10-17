@@ -1,0 +1,41 @@
+grafana:
+  admin:
+    existingSecret: grafana-admin
+    userKey: admin-user
+    passwordKey: admin-password
+  grafana.ini:
+    server:
+      root_url: https://faraja.kubeverse.io/grafana/
+      serve_from_sub_path: true
+    users:
+      allow_sign_up: false
+    auth.anonymous:
+      enabled: false
+  readinessProbe:
+    httpGet:
+      path: /grafana/api/health
+    timeoutSeconds: 5
+    periodSeconds: 10
+    failureThreshold: 6
+  livenessProbe:
+    httpGet:
+      path: /grafana/api/health
+  resources:
+    requests: {cpu: 100m, memory: 256Mi}
+    limits: {memory: 512Mi}
+  sidecar:
+    resources:
+      requests: {cpu: 10m, memory: 64Mi}
+      limits: {memory: 256Mi}
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    retention: 2d
+    resources:
+      requests: {cpu: 100m, memory: 400Mi}
+      limits: {memory: 800Mi}
+alertmanager:
+  alertmanagerSpec:
+    resources:
+      requests: {cpu: 10m, memory: 32Mi}
+      limits: {memory: 128Mi}
